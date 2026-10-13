@@ -1,0 +1,386 @@
+.lead-calendar .fc {
+  --fc-border-color: #edf0f6;
+  --fc-page-bg-color: #fff;
+  --fc-neutral-bg-color: #f8fafc;
+  --fc-neutral-text-color: #64748b;
+  --fc-today-bg-color: rgba(99, 102, 241, 0.05);
+  --fc-now-indicator-color: #f43f5e;
+  --fc-event-text-color: inherit;
+
+  font-family: inherit;
+  font-size: 13px;
+}
+.cal-progress {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 5;
+  height: 2px;
+  overflow: hidden;
+  background: #eef2ff;
+}
+
+.cal-progress::after {
+  content: "";
+  display: block;
+  width: 35%;
+  height: 100%;
+  background: #6366f1;
+  border-radius: 999px;
+  animation: cal-progress 1.1s ease-in-out infinite;
+}
+
+@keyframes cal-progress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+/* ==================== JADVAL ASOSI ==================== */
+.lead-calendar .fc .fc-scrollgrid {
+  border-radius: 14px;
+  overflow: hidden;
+  border-color: #edf0f6;
+}
+
+.lead-calendar .fc-theme-standard td,
+.lead-calendar .fc-theme-standard th {
+  border-color: #edf0f6;
+}
+
+/* ==================== HAFTA KUNLARI SARLAVHASI ==================== */
+.lead-calendar .fc .fc-col-header-cell {
+  background: #fafbfd;
+}
+
+.lead-calendar .fc .fc-col-header-cell-cushion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lead-calendar .fc .fc-dow {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.lead-calendar .fc .fc-dom {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  color: #1f2a44;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.lead-calendar .fc .fc-dom.is-today {
+  background: #4f46e5;
+  color: #fff;
+}
+
+/* ==================== OY KO'RINISHI: KUN KATAKLARI ==================== */
+.lead-calendar .fc .fc-daygrid-day-frame {
+  min-height: 112px;
+}
+
+.lead-calendar .fc .fc-daygrid-day-top {
+  flex-direction: row;
+}
+
+.lead-calendar .fc .fc-daygrid-day-number {
+  display: grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  margin: 6px 6px 2px;
+  padding: 0 4px;
+  border-radius: 999px;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.lead-calendar .fc .fc-daygrid-day-number:hover {
+  background: #f1f5f9;
+}
+
+.lead-calendar .fc .fc-day-other .fc-daygrid-day-number {
+  color: #cbd5e1;
+  font-weight: 500;
+}
+
+.lead-calendar .fc .fc-day-today .fc-daygrid-day-number {
+  background: #4f46e5;
+  color: #fff;
+  font-weight: 700;
+}
+
+.lead-calendar .fc .fc-daygrid-day.fc-day-sat,
+.lead-calendar .fc .fc-daygrid-day.fc-day-sun {
+  background-color: #fbfcfe;
+}
+
+.lead-calendar .fc .fc-daygrid-day.fc-day-today {
+  background-color: rgba(99, 102, 241, 0.05);
+}
+
+.lead-calendar .fc .fc-daygrid-day-events {
+  margin: 0 2px 4px;
+}
+
+/* ==================== EVENTLAR (yumshoq rangli "chip") ==================== */
+.lead-calendar .fc .fc-daygrid-event.fc-event,
+.lead-calendar .fc .fc-timegrid-event.fc-event {
+  --ev: #4f6ff2;
+
+  margin: 2px 4px;
+  padding: 3px 6px;
+  min-height: 24px;
+  border: 0 !important;
+  border-left: 3px solid var(--ev) !important;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--ev) 11%, #fff) !important;
+  box-shadow: none;
+  color: color-mix(in srgb, var(--ev) 60%, #0f172a) !important;
+  cursor: pointer;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.lead-calendar .fc .fc-daygrid-event.fc-event:hover,
+.lead-calendar .fc .fc-timegrid-event.fc-event:hover {
+  background: color-mix(in srgb, var(--ev) 20%, #fff) !important;
+  box-shadow: 0 4px 12px -4px color-mix(in srgb, var(--ev) 55%, transparent);
+}
+
+.lead-calendar .fc .fc-event:focus-visible {
+  outline: 2px solid var(--ev, #6366f1);
+  outline-offset: 1px;
+}
+
+.lead-calendar .fc .fc-event .fc-event-main {
+  color: inherit;
+}
+
+.lead-calendar .fc .fc-event.is-done {
+  opacity: 0.55;
+}
+
+.lead-calendar .fc .fc-event.is-done .fc-lead-title {
+  text-decoration: line-through;
+}
+
+.fc-lead-event {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 5px;
+  overflow: hidden;
+  color: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.fc-lead-icon {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  opacity: 0.85;
+}
+
+.fc-lead-time {
+  flex: none;
+  opacity: 0.75;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.fc-lead-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==================== "+N ta" HAVOLASI ==================== */
+.lead-calendar .fc .fc-daygrid-more-link {
+  margin: 1px 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #4f46e5;
+  font-size: 11px;
+  font-weight: 600;
+  transition: background-color 0.15s ease;
+}
+
+.lead-calendar .fc .fc-daygrid-more-link:hover {
+  background: #eef2ff;
+  text-decoration: none;
+}
+
+/* ==================== POPOVER ("+N ta" bosilganda) ==================== */
+.lead-calendar .fc .fc-popover {
+  overflow: hidden;
+  border: 1px solid #e8ebf3;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px -12px rgba(24, 35, 60, 0.2);
+}
+
+.lead-calendar .fc .fc-popover-header {
+  padding: 9px 12px;
+  background: #f8fafc;
+  color: #1f2a44;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ==================== HAFTA / KUN KO'RINISHI ==================== */
+.lead-calendar .fc .fc-timegrid-slot {
+  height: 44px;
+  border-color: #f1f4f9;
+}
+
+.lead-calendar .fc .fc-timegrid-slot-minor {
+  border-top-style: none;
+}
+
+.lead-calendar .fc .fc-timegrid-slot-label-cushion {
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.lead-calendar .fc .fc-timegrid-axis-cushion {
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.lead-calendar .fc .fc-timegrid-now-indicator-line {
+  border-width: 2px 0 0;
+}
+
+.lead-calendar .fc .fc-timegrid-now-indicator-arrow {
+  border-width: 5px;
+  margin-top: -5px;
+}
+
+.lead-calendar .fc .fc-timegrid-event .fc-event-main {
+  padding: 1px 0;
+}
+
+.lead-calendar .fc .fc-timegrid-event .fc-lead-event {
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.lead-calendar .fc .fc-timegrid-event .fc-lead-title {
+  white-space: normal;
+}
+
+/* ==================== RO'YXAT KO'RINISHI ==================== */
+.lead-calendar .fc .fc-list {
+  overflow: hidden;
+  border: 1px solid #edf0f6;
+  border-radius: 14px;
+}
+
+.lead-calendar .fc .fc-list-day-cushion {
+  padding: 10px 16px;
+  background: #f8fafc;
+}
+
+.lead-calendar .fc .fc-list-day-text,
+.lead-calendar .fc .fc-list-day-side-text {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lead-calendar .fc .fc-list-event {
+  cursor: pointer;
+}
+
+.lead-calendar .fc .fc-list-event td {
+  padding: 11px 16px;
+}
+
+.lead-calendar .fc .fc-list-event:hover td {
+  background: #f5f7ff;
+}
+
+.lead-calendar .fc .fc-list-event-title a {
+  color: #1f2a44;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lead-calendar .fc .fc-list-event-time {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.lead-calendar .fc .fc-list-empty {
+  background: #fff;
+  color: #94a3b8;
+}
+
+.lead-calendar .fc .fc-list-empty-cushion {
+  padding: 40px 0;
+  font-size: 13px;
+}
+
+/* ==================== HARAKATNI KAMAYTIRISH ==================== */
+@media (prefers-reduced-motion: reduce) {
+  .cal-progress::after {
+    animation: none;
+    width: 100%;
+  }
+
+  .lead-calendar .fc .fc-event,
+  .lead-calendar .fc .fc-daygrid-day-number {
+    transition: none;
+  }
+}
+
+/* ==================== MOBIL ==================== */
+@media (max-width: 640px) {
+  .lead-calendar .fc .fc-daygrid-day-frame {
+    min-height: 84px;
+  }
+
+  .lead-calendar .fc .fc-col-header-cell-cushion {
+    padding: 8px 2px;
+    font-size: 11px;
+  }
+
+  .lead-calendar .fc .fc-daygrid-day-number {
+    min-width: 22px;
+    height: 22px;
+    margin: 4px 4px 1px;
+    font-size: 11px;
+  }
+
+  .fc-lead-event {
+    font-size: 10.5px;
+  }
+
+  .lead-calendar .fc .fc-list-event td {
+    padding: 10px 12px;
+  }
+}

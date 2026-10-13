@@ -1,0 +1,62 @@
+export type Role = "user" | "manager" | "admin";
+export type Session = { user: User; accessToken: string; refreshToken: string };
+export type User = {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string | null;
+  jobTitle?: string | null;
+  company?: string | null;
+  language?: "uz" | "ru" | "en" | null;
+  role: Role;
+  isActive?: boolean;
+};
+export type LeadStatus = "new" | "in_progress" | "proposal" | "won" | "lost";
+export type Lead = {
+  id: string;
+  name: string;
+  company: string | null;
+  description: string | null;
+  value: number;
+  status: LeadStatus;
+  contactName: string | null;
+  contactEmail: string | null;
+  contactPhone: string | null;
+  nextActionAt?: string | null;
+  nextActionType?: "call" | "meeting" | "follow_up";
+  createdAt: string;
+  updatedAt: string;
+};
+export type Pagination = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+};
+export type CompanyStatus = "active" | "prospect" | "inactive";
+export type Company = {
+  id: string;
+  name: string;
+  industry: string | null;
+  description: string | null;
+  contactName: string | null;
+  contactEmail: string | null;
+  contactPhone: string | null;
+  website: string | null;
+  status: CompanyStatus;
+  createdAt: string;
+  updatedAt: string;
+};
+export type TaskStatus = "todo" | "in_progress" | "done";
+export type TaskPriority = "low" | "medium" | "high";
+export type Task = {
+  id: string;
+  title: string;
+  description?: string | null;
+  status: TaskStatus;
+  priority: TaskPriority;
+  dueAt: string;
+  lead?: { id: string; name: string; company?: string | null } | null;
+  createdAt: string;
+  updatedAt: string;
+};

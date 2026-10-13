@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="CRM Pro — mijozlar, savdo jarayoni va jamoa ishlarini boshqarish tizimi."
+    />
+    <meta name="theme-color" content="#172b55" />
+    <link rel="icon" type="image/png" href="/crm.png" />
+    <link rel="apple-touch-icon" href="/crm.png" />
+    <title>CRM Pro — Mijozlarni boshqarish</title>
+    <style>
+      #app-loader {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: #f5f7fc;
+        color: #172b55;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      #app-loader > div {
+        display: grid;
+        justify-items: center;
+        gap: 14px;
+      }
+
+      #app-loader img {
+        width: 54px;
+        height: 54px;
+        border-radius: 16px;
+        object-fit: cover;
+        box-shadow: 0 12px 28px rgb(45 73 160 / 22%);
+      }
+
+      #app-loader span {
+        width: 28px;
+        height: 28px;
+        border: 3px solid #dfe6ff;
+        border-top-color: #5552e8;
+        border-radius: 999px;
+        animation: crm-spin 0.8s linear infinite;
+      }
+
+      @keyframes crm-spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div id="app-loader" role="status" aria-label="CRM Pro yuklanmoqda">
+        <div>
+          <img src="/crm.png" alt="CRM Pro" />
+          <span aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
