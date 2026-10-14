@@ -1,87 +1,66 @@
-# React + TypeScript + Vite
+# CRM Pro — frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CRM Pro mijozlar, leadlar, kompaniyalar, vazifalar va savdo hisobotlarini boshqarish uchun yaratilgan web ilova.
 
-Currently, two official plugins are available:
+## Asosiy imkoniyatlar
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Kirish va ro‘yxatdan o‘tish
+- Manager dashboard, leadlar va Kanban board
+- Kontaktlar, kompaniyalar va vazifalar boshqaruvi
+- Kalendar va hisobotlar
+- Admin uchun foydalanuvchilar hamda rollarni boshqarish
+- Telefon va kompyuter ekranlariga mos interfeys
 
-## React Compiler
+## Ishga tushirish
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Kerak bo‘ladigan dasturlar: Node.js 20 yoki undan yangi versiyasi va ishlayotgan CRM backend.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+So‘ng brauzerda terminal chiqargan manzilni oching. Odatda: `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Local rejimda Vite API so‘rovlarini avtomatik ravishda `http://localhost:8000` dagi backendga yuboradi. Shu sabab backend ham ishga tushgan bo‘lishi kerak.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Production uchun API manzili
 
+Deploy qilishdan oldin loyiha ildizida `.env` fayl yarating va backendning public URL manzilini yozing:
+
+```env
+VITE_API_URL=https://api.example.com
 ```
-# Vercel deploy
 
-Vercel'da **Build Command**: `npm run build`, **Output Directory**: `dist` qilib belgilang.
+`VITE_API_URL` oxiriga `/` qo‘ymang. Bu qiymat brauzerga yuboriladi, shuning uchun unda maxfiy kalit yoki parol saqlamang.
 
-Environment Variables ichida production backend manzilingizni qo'shing:
+## Buyruqlar
+
+```bash
+npm run dev     # development server
+npm run lint    # kod tekshiruvi
+npm run build   # production build
+npm run preview # build natijasini local ko‘rish
+```
+
+## Vercel’ga joylash
+
+1. GitHub repository’ni Vercel’ga import qiling.
+2. **Build Command** sifatida `npm run build` tanlang.
+3. **Output Directory** sifatida `dist` tanlang.
+4. Environment Variables bo‘limiga `VITE_API_URL` va production backend URL’ini kiriting.
+5. Deploy qiling.
+
+SPA routing uchun `vercel.json` tayyor: to‘g‘ridan-to‘g‘ri `/leads` yoki `/dashboard` sahifasini ochish ham ishlaydi.
+
+## Link preview rasmi
+
+`public/website.png` link ulashilganda preview rasmi bo‘lib ishlatiladi. Buning uchun Open Graph meta-teglari `index.html`ga qo‘shilgan.
+
+Deploydan keyin preview chiqishi uchun rasm public bo‘lishi kerak, ya’ni quyidagi manzil brauzerda ochilishi lozim:
 
 ```text
-VITE_API_URL=https://your-backend-domain.example
+https://saytingiz-domeningiz/website.png
 ```
 
-`VITE_API_URL=/api` faqat lokal Vite proxy uchun. Backend URL bo'lmasa login va API so'rovlari Vercel'da ishlamaydi.
-
+Telegram, Instagram yoki boshqa tarmoqlarda eski preview cache’da qolishi mumkin. Bunday holatda bir necha daqiqa kuting yoki link oxiriga `?v=2` kabi yangi parametr qo‘shib yuboring.
