@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import {
   Alert,
   Button,
@@ -29,6 +30,7 @@ export default function Register() {
   const {
     control,
     handleSubmit,
+    clearErrors,
     setError,
     formState: { errors, isSubmitting },
   } = useForm<RegisterValues>({
@@ -44,6 +46,8 @@ export default function Register() {
   const passwordValid = passwordPattern.test(password);
 
   const onSubmit = async ({ fullName, email, password }: RegisterValues) => {
+    clearErrors();
+
     try {
       const session = await createAccount(
         fullName.trim(),
@@ -61,9 +65,16 @@ export default function Register() {
         { replace: true },
       );
     } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 409) {
+        setError("email", {
+          type: "server",
+          message: "Bu email manzil bilan hisob allaqachon mavjud.",
+        });
+        return;
+      }
+
       const message = errorMessage(error);
       setError("root", { message });
-      notify.error(message);
     }
   };
 

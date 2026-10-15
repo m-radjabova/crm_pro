@@ -13,6 +13,26 @@ let currentUser: User | null = null;
 
 type StoredTokens = { accessToken: string; refreshToken: string };
 
+type JwtPayload = { exp?: number };
+
+// Token imzosini frontend tekshirmaydi — buni backend qiladi. Bu tekshiruv
+// faqat muddati tugagan yoki buzilgan token bilan keraksiz so'rov yubormaslik
+// uchun ishlatiladi.
+const isTokenActive = (token: string) => {
+  try {
+    const payloadPart = token.split(".")[1];
+    if (!payloadPart) return false;
+
+    const payload = JSON.parse(
+      atob(payloadPart.replace(/-/g, "+").replace(/_/g, "/")),
+    ) as JwtPayload;
+
+    return typeof payload.exp === "number" && payload.exp * 1000 > Date.now();
+  } catch {
+    return false;
+  }
+};
+
 const getStoredTokens = (): StoredTokens | null => {
   try {
     const accessToken = localStorage.getItem(storageKey);
@@ -67,7 +87,11 @@ const migrateLegacySession = () => {
 
 migrateLegacySession();
 
-export const hasSavedTokens = () => Boolean(getStoredTokens());
+// Faqat yaroqli refresh token bo'lsa sessiyani tiklashga uriniladi.
+export const hasSavedTokens = () => {
+  const tokens = getStoredTokens();
+  return Boolean(tokens && isTokenActive(tokens.refreshToken));
+};
 
 export const getSession = (): Session | null => {
   const tokens = getStoredTokens();
@@ -92,9 +116,22 @@ export const clearSession = () => {
 
 export const restoreSession = async (): Promise<Session | null> => {
   const tokens = getStoredTokens();
-  if (!tokens) return null;
+  if (!tokens || !isTokenActive(tokens.refreshToken)) {
+    clearSession();
+    return null;
+  }
 
   try {
+    // Access token tugagan bo'lsa, /users/me ga 401 yubormasdan oldin
+    // uni refresh token orqali yangilaymiz.
+    if (!isTokenActive(tokens.accessToken)) {
+      const { data } = await axios.post<{ tokens: StoredTokens }>(
+        `${apiClient.defaults.baseURL}/auth/refresh`,
+        { refreshToken: tokens.refreshToken },
+      );
+      saveTokens(data.tokens);
+    }
+
     const { data } = await apiClient.get<{ user: User }>("/users/me");
     currentUser = data.user;
     return { user: data.user, ...(getStoredTokens() || tokens) };

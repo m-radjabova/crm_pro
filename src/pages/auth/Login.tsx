@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import {
   Alert,
   Button,
@@ -26,6 +27,7 @@ export default function Login() {
   const {
     control,
     handleSubmit,
+    clearErrors,
     setError,
     formState: { errors, isSubmitting },
   } = useForm<LoginValues>({
@@ -34,6 +36,8 @@ export default function Login() {
   });
 
   const onSubmit = async ({ email, password, remember }: LoginValues) => {
+    clearErrors();
+
     try {
       const session = await login(
         email.trim().toLowerCase(),
@@ -50,9 +54,11 @@ export default function Login() {
         { replace: true },
       );
     } catch (error) {
-      const message = errorMessage(error);
+      const message =
+        axios.isAxiosError(error) && error.response?.status === 401
+          ? "Email yoki parol noto'g'ri. Ma'lumotlarni tekshirib, qayta urinib ko'ring."
+          : errorMessage(error);
       setError("root", { message });
-      notify.error(message);
     }
   };
 

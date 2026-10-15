@@ -9,7 +9,6 @@ import {
 import LoadingScreen from "./components/ui/LoadingScreen";
 import Settings from "./pages/manager/Settings";
 
-
 const Login = lazy(() => import("./pages/auth/Login"));
 const Register = lazy(() => import("./pages/auth/Register"));
 const CRMLayout = lazy(() => import("./layout/CRMLayout"));
